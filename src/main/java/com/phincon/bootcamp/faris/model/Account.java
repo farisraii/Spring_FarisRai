@@ -1,10 +1,19 @@
-package com.phincon.bootcamp.Bootcamp.model;
+package com.phincon.bootcamp.faris.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Table
+@Entity
 
 public class Account {
-    public int id;
-    public String name;
-    public double amount;
+
+    @Id
+    int id;
+
+    String name;
+    double amount;
 
     public int getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.phincon.bootcamp.Bootcamp;
+package com.phincon.bootcamp.faris;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

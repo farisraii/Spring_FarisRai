@@ -40,11 +40,14 @@ public class AccountQuizServiceTest {
         Mockito.when(accountRepository.save(any(Account.class))).thenReturn(existingAccount);
 
         Account updatedAccount = accountService.updateAccount(1L, existingAccount);
+
+        assertThat(updatedAccount).isNotNull();
         assertThat(updatedAccount.getId()).isEqualTo(existingAccount.getId());
         assertThat(updatedAccount.getType()).isEqualTo(existingAccount.getType());
         assertThat(updatedAccount.getCustomerId()).isEqualTo(existingAccount.getCustomerId());
         assertThat(updatedAccount.getAmount()).isEqualTo(existingAccount.getAmount());
         assertThat(updatedAccount.getStatus()).isEqualTo(existingAccount.getStatus());
+
         assertThat(updatedAccount).isNotNull();
         assertThat(updatedAccount.getId()).isEqualTo(1L);
     }
@@ -74,7 +77,6 @@ public class AccountQuizServiceTest {
         assertThat(patchedAccount.getType()).isEqualTo("Checking");
         assertThat(patchedAccount.getCustomerId()).isEqualTo(456L);
         assertThat(patchedAccount.getAmount()).isEqualTo(2000L);
-        assertThat(patchedAccount.getStatus()).isEqualTo(false);
         assertThat(patchedAccount.getStatus()).isEqualTo(false);
     }
 
@@ -127,69 +129,61 @@ public class AccountQuizServiceTest {
 
     @Test
     public void testDeleteAccount() {
-        // Nothing to assert for deleteAccount() method, as it doesn't return a value.
+
         Mockito.doNothing().when(accountRepository).deleteById(anyLong());
         accountService.deleteAccount(1L);
     }
 
     @Test
+    public void testUpdateAccountWhenAccountExists() {
+        // Prepare a sample account
+        Account existingAccount = new Account();
+        existingAccount.setId(1L);
+        existingAccount.setAmount(1000L);
+
+        
+        Mockito.when(accountRepository.existsById(anyLong())).thenReturn(true);
+        Mockito.when(accountRepository.save(any(Account.class))).thenReturn(existingAccount);
+
+        
+        Account updatedAccount = accountService.updateAccount(1L, existingAccount);
+
+        
+        assertThat(updatedAccount).isNotNull();
+        assertThat(updatedAccount.getId()).isEqualTo(existingAccount.getId());
+        assertThat(updatedAccount.getAmount()).isEqualTo(existingAccount.getAmount());
+    }
+
+    @Test
     public void testUpdateAccountWhenAccountNotExists() {
+        
         Account nonExistingAccount = new Account();
         nonExistingAccount.setId(2L);
-        nonExistingAccount.setType("Checking");
+        nonExistingAccount.setAmount(2000L);
 
+        
         Mockito.when(accountRepository.existsById(anyLong())).thenReturn(false);
 
+        
         Account updatedAccount = accountService.updateAccount(2L, nonExistingAccount);
 
+        
         assertThat(updatedAccount).isNull();
     }
 
     @Test
-    public void testPatchAccountWhenAccountDoesNotExist() {
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("type", "Checking");
-        updates.put("customerId", 456L);
-        updates.put("amount", 2000L);
-        updates.put("status", false);
+    public void testPatchAccountWhenAccountNotPresent() {
 
-        // Mocking repository behavior when account does not exist
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("type", "Savings");
+        updates.put("customerId", 123L);
+        updates.put("amount", 1000L);
+        updates.put("status", true);
+
         Mockito.when(accountRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        // Calling the service method
         Account patchedAccount = accountService.patchAccount(1L, updates);
 
-        // Asserting that the returned value is null when the account does not exist
         assertThat(patchedAccount).isNull();
     }
-
-    @Test
-    public void testPatchAccountSwitchCases() {
-        Account existingAccount = new Account();
-        existingAccount.setId(1L);
-        existingAccount.setType("Savings");
-        existingAccount.setCustomerId(123L);
-        existingAccount.setAmount(1000L);
-        existingAccount.setStatus(true);
-
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("type", "Checking");
-        updates.put("customerId", 456L);
-        updates.put("amount", 2000L);
-        updates.put("status", false);
-
-        Mockito.when(accountRepository.findById(anyLong())).thenReturn(Optional.of(existingAccount));
-        Mockito.when(accountRepository.save(any(Account.class))).thenReturn(existingAccount);
-
-        Account patchedAccount = accountService.patchAccount(1L, updates);
-
-        assertThat(patchedAccount).isNotNull();
-        assertThat(patchedAccount.getId()).isEqualTo(existingAccount.getId());
-        assertThat(patchedAccount.getType()).isEqualTo("Checking");
-        assertThat(patchedAccount.getCustomerId()).isEqualTo(456L);
-        assertThat(patchedAccount.getAmount()).isEqualTo(2000L);
-        assertThat(patchedAccount.getStatus()).isEqualTo(false);
-    }
-
-    
 }

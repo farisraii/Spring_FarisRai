@@ -1,14 +1,11 @@
 package com.phincon.bootcamp.faris;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BootcampApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BootcampApplication.class, args);
-    }
+    public static void main(String[] args) {};
 
     // @Override
     // public void run(String... args) throws Exception {

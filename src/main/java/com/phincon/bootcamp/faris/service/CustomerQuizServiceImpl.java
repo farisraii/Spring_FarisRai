@@ -46,41 +46,34 @@ public class CustomerQuizServiceImpl implements CustomerQuizService {
     }
 
     @Override
-    public Customer patchCustomer(Long id, Map<String, Object> updates) {
-        Optional<Customer> existingCustomerOptional = customerRepository.findById(id);
-        if (existingCustomerOptional.isPresent()) {
-            Customer existingCustomer = existingCustomerOptional.get();
+public Customer patchCustomer(Long id, Map<String, Object> updates) {
+    Optional<Customer> existingCustomerOptional = customerRepository.findById(id);
+    if (existingCustomerOptional.isPresent()) {
+        Customer existingCustomer = existingCustomerOptional.get();
+
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "name":
+                    if (value instanceof String) {
+                        existingCustomer.setName((String) value);
+                    } else {
+                        throw new IllegalArgumentException("Invalid data type for 'name' field");
+                    }
+                    break;
+                case "age":
+                    if (value instanceof Integer) {
+                        existingCustomer.setAge((Integer) value);
+                    } else {
+                        throw new IllegalArgumentException("Invalid data type for 'age' field");
+                    }
+                    break;
+                // Optionally handle other specific fields here
+            }
+        });
+
+        return customerRepository.save(existingCustomer);
+     }
+    return null;
     
-            updates.forEach((key, value) -> {
-                switch (key) {
-                    case "name":
-                        if (value instanceof String) {
-                            existingCustomer.setName((String) value);
-                        } else {
-                            // Handle unexpected data type for 'name' field
-                            // You may throw an exception or handle it accordingly
-                        }
-                        break;
-                    case "age":
-                        if (value instanceof Integer) {
-                            existingCustomer.setAge((Integer) value);
-                        } else {
-                            // Handle unexpected data type for 'age' field
-                            // You may throw an exception or handle it accordingly
-                        }
-                        break;
-                    // Add cases for other fields to update...
-                    default:
-                        // Handle unknown fields if necessary
-                        // For example:
-                        // log.warn("Unknown field encountered: {}", key);
-                        break;
-                }
-            });
-    
-            return customerRepository.save(existingCustomer);
-        }
-        return null; // Customer not found
     }
-    
 }

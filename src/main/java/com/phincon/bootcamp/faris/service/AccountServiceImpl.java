@@ -5,8 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.phincon.bootcamp.faris.model.Account;
+import com.phincon.bootcamp.faris.model.AccountLatihan;
 import com.phincon.bootcamp.faris.repository.AccountRepository;
 
 
@@ -17,8 +16,8 @@ public class AccountServiceImpl implements AccountService {
     AccountRepository repository;
 
     @Override
-    public Account geAccount() {
-        Account acc = new Account();
+    public AccountLatihan geAccount() {
+        AccountLatihan acc = new AccountLatihan();
         acc.setId(1);
         acc.setName("Faris");
         acc.setAmount(10.0);
@@ -27,18 +26,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAccounts() {
-        return (List <Account>) repository.findAll();
+    public List<AccountLatihan> getAccounts() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAccounts'");
     }
 
     @Override
-    public Account save (Account account){
-        return repository.save(account);
+    public AccountLatihan save(AccountLatihan acc) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
     @Override
-    public Optional<Account> findByID(int id) {
-        return repository.findById(id);
+    public Optional<AccountLatihan> findByID(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByID'");
     }
 
  }

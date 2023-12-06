@@ -7,15 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "account")
-public class Account {
+@Table(name = "customer")
+public class Customer {
     @Id
     private Long id;
 
-    private String type;
-    private Long customerId;
-    private Long amount;
-    private Boolean status;
+    private int age;
+    private String name;
+    private boolean status;
     private Timestamp createdDate;
     private Timestamp updatedDate;
 
@@ -27,31 +26,24 @@ public class Account {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Long getAmount() {
-        return amount;
+    public int getAge() {
+        return age;
     }
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public Boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

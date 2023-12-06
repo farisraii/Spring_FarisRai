@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phincon.bootcamp.faris.model.Account;
+import com.phincon.bootcamp.faris.model.AccountLatihan;
 import com.phincon.bootcamp.faris.service.AccountService;
 
 @RestController
@@ -21,18 +21,18 @@ public class AccountController {
     AccountService asd;
     
     @GetMapping ("/bootcamp/account")
-    public Account getAccount(){
+    public AccountLatihan getAccount(){
         return asd.geAccount();
     }
 
     @GetMapping ("/bootcamp/accounts")
-    public List <Account>getAccounts(){
+    public List<AccountLatihan> getAccounts(){
         return asd.getAccounts();
     }
 
     @PostMapping ("/bootcamp/account")
-    public Account save(@RequestBody Map<String, Object> body){
-        Account acc = new Account();
+    public AccountLatihan save(@RequestBody Map<String, Object> body){
+        AccountLatihan acc = new AccountLatihan();
         acc.setId((int) body.get("id"));
         acc.setName((String) body.get("name"));
         acc.setAmount((double) body.get("amount"));
@@ -41,7 +41,7 @@ public class AccountController {
     }
 
     @GetMapping("/bootcamp/account/{id}")
-    public Optional<Account> findByID (@PathVariable int id) {
+    public Optional<AccountLatihan> findByID (@PathVariable int id) {
         return asd.findByID(id);
     }
     

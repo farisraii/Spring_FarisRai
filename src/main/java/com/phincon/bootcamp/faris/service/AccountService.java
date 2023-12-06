@@ -3,16 +3,16 @@ package com.phincon.bootcamp.faris.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.phincon.bootcamp.faris.model.Account;
+import com.phincon.bootcamp.faris.model.AccountLatihan;
 
 public interface AccountService {
     
-    public Account geAccount();
+    public AccountLatihan geAccount();
 
-    public List <Account> getAccounts();
+    public List <AccountLatihan> getAccounts();
 
-    public Account save (Account account);
+    public AccountLatihan save (AccountLatihan acc);
 
-    public Optional <Account> findByID (int id);
+    public Optional <AccountLatihan> findByID (int id);
 
 }

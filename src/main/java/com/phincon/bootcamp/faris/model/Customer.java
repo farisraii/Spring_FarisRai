@@ -26,6 +26,7 @@ public class Customer {
     private LocalDate birthDate;
     private Timestamp createdDate;
     private Timestamp updatedDate;
+    
 
     
 }

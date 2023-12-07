@@ -1,6 +1,6 @@
 package com.phincon.bootcamp.faris.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

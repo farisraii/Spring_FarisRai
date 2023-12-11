@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CustomerQuizServiceImplTest {
+public class CustomerQuizServiceTest {
 
     @Mock
     private CustomerQuizRepository customerRepository;
@@ -38,7 +38,7 @@ public class CustomerQuizServiceImplTest {
     }
 
     @Test
-    public void testGetAllCustomers() {
+    public void testGetAllCustomers_WhenListNotEmpty() {
         List<Customer> customerList = Collections.singletonList(testCustomer);
 
         when(customerRepository.findAll()).thenReturn(customerList);
@@ -48,6 +48,15 @@ public class CustomerQuizServiceImplTest {
         assertThat(fetchedCustomers).isNotNull();
         assertThat(fetchedCustomers.size()).isEqualTo(1);
         assertThat(fetchedCustomers.get(0)).isEqualTo(testCustomer);
+    }
+
+    @Test
+    public void testGetAllCustomers_WhenListEmpty() {
+        when(customerRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<Customer> fetchedCustomers = customerService.getAllCustomers();
+
+        assertThat(fetchedCustomers).isEmpty();
     }
 
     @Test

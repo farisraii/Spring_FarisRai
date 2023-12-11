@@ -1,54 +1,51 @@
 package com.phincon.bootcamp.faris.model;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.sql.Timestamp;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class CustomerQuizModelTest {
 
-    private Long id;
-    private String name;
-    private int age;
-    private boolean active;
+    private Customer customer;
 
-    public CustomerQuizModelTest() {
-        // Constructor default
+    @BeforeEach
+    public void setUp() {
+        customer = new Customer();
+        customer.setId(1L);
+        customer.setName("John Doe");
+        customer.setAge(30);
+        customer.setStatus(true);
+        Timestamp createdDate = new Timestamp(System.currentTimeMillis());
+        customer.setCreatedDate(createdDate);
+        customer.setUpdatedDate(createdDate);
     }
 
-    public CustomerQuizModelTest(Long id, String name, int age, boolean active) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.active = active;
+    @Test
+    public void testCustomerModel() {
+        assertThat(customer.getId()).isEqualTo(1L);
+        assertThat(customer.getName()).isEqualTo("John Doe");
+        assertThat(customer.getAge()).isEqualTo(30);
+        assertThat(customer.isStatus()).isTrue();
+        assertThat(customer.getCreatedDate()).isNotNull();
+        assertThat(customer.getUpdatedDate()).isNotNull();
     }
 
-    // Getter dan setter untuk setiap atribut
+    @Test
+    public void testUpdatedCustomerModel() {
+        Timestamp updatedDate = new Timestamp(System.currentTimeMillis());
+        customer.setId(2L);
+        customer.setName("Jane Doe");
+        customer.setAge(25);
+        customer.setStatus(false);
+        customer.setUpdatedDate(updatedDate);
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+        assertThat(customer.getId()).isEqualTo(2L);
+        assertThat(customer.getName()).isEqualTo("Jane Doe");
+        assertThat(customer.getAge()).isEqualTo(25);
+        assertThat(customer.isStatus()).isFalse();
+        assertThat(customer.getUpdatedDate()).isEqualTo(updatedDate);
     }
 }

@@ -19,45 +19,21 @@ public class Customer {
     private Timestamp updatedDate;
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public int getAge() {
-        return age;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
 
-    public boolean isStatus() {
-        return status;
-    }
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+    public boolean isStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
+    public Timestamp getCreatedDate() { return createdDate; }
+    public void setCreatedDate(Timestamp createdDate) { this.createdDate = createdDate; }
 
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
-    public void setUpdatedDate(Timestamp updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+    public Timestamp getUpdatedDate() { return updatedDate; }
+    public void setUpdatedDate(Timestamp updatedDate) { this.updatedDate = updatedDate; }
 }

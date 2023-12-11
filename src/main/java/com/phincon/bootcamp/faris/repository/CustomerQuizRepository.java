@@ -7,5 +7,4 @@ import com.phincon.bootcamp.faris.model.Customer;
 
 @Repository
 public interface CustomerQuizRepository extends JpaRepository<Customer, Long> {
-    // Jika ada metode tambahan khusus yang diperlukan, bisa ditambahkan di sini
 }

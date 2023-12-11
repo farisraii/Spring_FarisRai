@@ -13,8 +13,12 @@ import com.phincon.bootcamp.faris.repository.AccountQuizRepository;
 @Service
 public class AccountQuizServiceImpl implements AccountQuizService {
 
+    private final AccountQuizRepository accountRepository;
+
     @Autowired
-    private AccountQuizRepository accountRepository;
+    public AccountQuizServiceImpl(AccountQuizRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public List<Account> getAllAccounts() {
@@ -65,9 +69,8 @@ public class AccountQuizServiceImpl implements AccountQuizService {
                     case "status":
                         existingAccount.setStatus((Boolean) value);
                         break;
-                    
                     default:
-
+                        // Handle unknown keys or no operation required
                         break;
                 }
             });
@@ -76,4 +79,5 @@ public class AccountQuizServiceImpl implements AccountQuizService {
         }
         return null;
     }
+
 }

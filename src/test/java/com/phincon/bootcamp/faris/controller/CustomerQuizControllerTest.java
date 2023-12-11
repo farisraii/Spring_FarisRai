@@ -10,11 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -100,54 +102,49 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testPatchCustomer() throws Exception {
-    Customer updatedCustomer = new Customer();
-    updatedCustomer.setId(1L);
-    updatedCustomer.setName("John Updated");
-    // Anda bisa mengatur nilai lain jika diperlukan
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setId(1L);
+        updatedCustomer.setName("John Updated");
 
-    when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(updatedCustomer);
+        when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(updatedCustomer);
 
-    Map<String, Object> updates = Map.of("name", "John Updated");
+        Map<String, Object> updates = Map.of("name", "John Updated");
 
-    mockMvc.perform(patch("/api/customers/patch/{id}", 1)
-            .content(objectMapper.writeValueAsString(updates))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.name").value("John Updated"));
+        mockMvc.perform(patch("/api/customers/patch/{id}", 1)
+                .content(objectMapper.writeValueAsString(updates))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("John Updated"));
     }
 
     @Test
     public void testPatchCustomerNotFound() throws Exception {
-    when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(null);
+        when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(null);
 
-    Map<String, Object> updates = Map.of("name", "John Updated");
+        Map<String, Object> updates = Map.of("name", "John Updated");
 
-    mockMvc.perform(patch("/api/customers/patch/{id}", 1)
-            .content(objectMapper.writeValueAsString(updates))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(patch("/api/customers/patch/{id}", 1)
+                .content(objectMapper.writeValueAsString(updates))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
     public void testUpdateCustomerNotFound() throws Exception {
-    when(customerService.updateCustomer(anyLong(), any(Customer.class))).thenReturn(null);
+        when(customerService.updateCustomer(anyLong(), any(Customer.class))).thenReturn(null);
 
-    mockMvc.perform(put("/api/customers/update/{id}", 1)
-            .content(objectMapper.writeValueAsString(customer))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(put("/api/customers/update/{id}", 1)
+                .content(objectMapper.writeValueAsString(customer))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetCustomerByIdNotFound() throws Exception {
-    when(customerService.getCustomerById(anyLong())).thenReturn(Optional.empty());
+        when(customerService.getCustomerById(anyLong())).thenReturn(Optional.empty());
 
-    mockMvc.perform(get("/api/customers/{id}", 1)
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
-        }
-
-
-
-
+        mockMvc.perform(get("/api/customers/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }

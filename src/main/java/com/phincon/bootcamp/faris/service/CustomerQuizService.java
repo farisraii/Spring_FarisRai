@@ -8,9 +8,9 @@ import com.phincon.bootcamp.faris.model.Customer;
 
 public interface CustomerQuizService {
     List<Customer> getAllCustomers();
-    Optional<Customer> getCustomerById(Long id);
+    Optional<Customer> getCustomerById(String id);
     Customer createCustomer(Customer customer);
-    Customer updateCustomer(Long id, Customer customer);
-    void deleteCustomer(Long id);
-    Customer patchCustomer(Long id, Map<String, Object> updates);
+    Customer updateCustomer(String id, Customer customer);
+    void deleteCustomer(String id);
+    Customer patchCustomer(String id, Map<String, Object> updates);
 }

@@ -14,7 +14,7 @@ public class CustomerQuizModelTest {
     @BeforeEach
     public void setUp() {
         customer = new Customer();
-        customer.setId(1L);
+        customer.setId("1L");
         customer.setName("John Doe");
         customer.setAge(30);
         customer.setStatus(true);
@@ -25,7 +25,7 @@ public class CustomerQuizModelTest {
 
     @Test
     public void testCustomerModel() {
-        assertThat(customer.getId()).isEqualTo(1L);
+        assertThat(customer.getId()).isEqualTo("1L");
         assertThat(customer.getName()).isEqualTo("John Doe");
         assertThat(customer.getAge()).isEqualTo(30);
         assertThat(customer.isStatus()).isTrue();
@@ -36,13 +36,13 @@ public class CustomerQuizModelTest {
     @Test
     public void testUpdatedCustomerModel() {
         Timestamp updatedDate = new Timestamp(System.currentTimeMillis());
-        customer.setId(2L);
+        customer.setId("2L");
         customer.setName("Jane Doe");
         customer.setAge(25);
         customer.setStatus(false);
         customer.setUpdatedDate(updatedDate);
 
-        assertThat(customer.getId()).isEqualTo(2L);
+        assertThat(customer.getId()).isEqualTo("2L");
         assertThat(customer.getName()).isEqualTo("Jane Doe");
         assertThat(customer.getAge()).isEqualTo(25);
         assertThat(customer.isStatus()).isFalse();

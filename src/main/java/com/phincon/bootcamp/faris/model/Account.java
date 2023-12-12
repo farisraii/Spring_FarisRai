@@ -3,6 +3,8 @@ package com.phincon.bootcamp.faris.model;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,23 +12,24 @@ import jakarta.persistence.Table;
 @Table(name = "account")
 public class Account {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String type;
-    private Long customerId;
+    private String customerId;
     private Long amount;
     private Boolean status;
     private Timestamp createdDate;
     private Timestamp updatedDate;
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public String getCustomerId() { return customerId; }
+    public void setCustomerId(String customerId) { this.customerId = customerId; }
 
     public Long getAmount() { return amount; }
     public void setAmount(Long amount) { this.amount = amount; }

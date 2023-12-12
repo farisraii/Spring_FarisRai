@@ -38,9 +38,9 @@ public class AccountQuizControllerTest {
     @BeforeEach
     public void setUp() {
         account = new Account();
-        account.setId(1L);
+        account.setId("1L");
         account.setType("Savings");
-        account.setCustomerId(123L);
+        account.setCustomerId("123L");
         account.setAmount(1000L);
         account.setStatus(true);
         account.setCreatedDate(new Timestamp(System.currentTimeMillis()));
@@ -59,7 +59,7 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testGetAccountById() throws Exception {
-        when(accountService.getAccountById(anyLong())).thenReturn(Optional.of(account));
+        when(accountService.getAccountById(anyString())).thenReturn(Optional.of(account));
 
         mockMvc.perform(get("/accounts/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -80,7 +80,7 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testUpdateAccount() throws Exception {
-        when(accountService.updateAccount(anyLong(), any(Account.class))).thenReturn(account);
+        when(accountService.updateAccount(anyString(), any(Account.class))).thenReturn(account);
 
         mockMvc.perform(put("/accounts/{id}", 1)
                 .content(objectMapper.writeValueAsString(account))
@@ -97,7 +97,7 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testPatchAccount() throws Exception {
-        when(accountService.patchAccount(anyLong(), anyMap())).thenReturn(account);
+        when(accountService.patchAccount(anyString(), anyMap())).thenReturn(account);
 
         Map<String, Object> updates = Map.of("type", "Savings");
 
@@ -110,7 +110,7 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testPatchAccountNotFound() throws Exception {
-        when(accountService.patchAccount(anyLong(), anyMap())).thenReturn(null);
+        when(accountService.patchAccount(anyString(), anyMap())).thenReturn(null);
 
         Map<String, Object> updates = Map.of("type", "Savings");
 
@@ -122,9 +122,9 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testUpdateAccountNotFound() throws Exception {
-        when(accountService.updateAccount(anyLong(), any(Account.class))).thenReturn(null);
+        when(accountService.updateAccount(anyString(), any(Account.class))).thenReturn(null);
 
-        mockMvc.perform(put("/accounts/{id}", 1)
+        mockMvc.perform(put("/accounts/{id}", 6)
                 .content(objectMapper.writeValueAsString(account))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -132,9 +132,9 @@ public class AccountQuizControllerTest {
 
     @Test
     public void testGetAccountByIdNotFound() throws Exception {
-        when(accountService.getAccountById(anyLong())).thenReturn(Optional.empty());
+        when(accountService.getAccountById(anyString())).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/accounts/{id}", 1)
+        mockMvc.perform(get("/accounts/{id}", "6")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

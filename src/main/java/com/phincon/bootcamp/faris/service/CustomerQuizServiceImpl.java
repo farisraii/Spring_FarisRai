@@ -22,11 +22,11 @@ public class CustomerQuizServiceImpl implements CustomerQuizService {
 
     @Override
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        return (List<Customer>) customerRepository.findAll();
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Long id) {
+    public Optional<Customer> getCustomerById(String id) {
         return customerRepository.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class CustomerQuizServiceImpl implements CustomerQuizService {
     }
 
     @Override
-    public Customer updateCustomer(Long id, Customer customer) {
+    public Customer updateCustomer(String id, Customer customer) {
         if (customerRepository.existsById(id)) {
             customer.setId(id);
             return customerRepository.save(customer);
@@ -45,7 +45,7 @@ public class CustomerQuizServiceImpl implements CustomerQuizService {
     }
 
     @Override
-    public Customer patchCustomer(Long id, Map<String, Object> updates) {
+    public Customer patchCustomer(String id, Map<String, Object> updates) {
         Optional<Customer> existingCustomerOptional = customerRepository.findById(id);
         if (existingCustomerOptional.isPresent()) {
             Customer existingCustomer = existingCustomerOptional.get();
@@ -76,7 +76,7 @@ public class CustomerQuizServiceImpl implements CustomerQuizService {
     }
 
     @Override
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(String id) {
         customerRepository.deleteById(id);
     }
 }

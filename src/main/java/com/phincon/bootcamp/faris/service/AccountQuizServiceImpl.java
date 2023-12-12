@@ -22,11 +22,11 @@ public class AccountQuizServiceImpl implements AccountQuizService {
 
     @Override
     public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+        return (List<Account>) accountRepository.findAll();
     }
 
     @Override
-    public Optional<Account> getAccountById(Long id) {
+    public Optional<Account> getAccountById(String id) {
         return accountRepository.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class AccountQuizServiceImpl implements AccountQuizService {
     }
 
     @Override
-    public Account updateAccount(Long id, Account account) {
+    public Account updateAccount(String id, Account account) {
         if (accountRepository.existsById(id)) {
             account.setId(id);
             return accountRepository.save(account);
@@ -45,12 +45,12 @@ public class AccountQuizServiceImpl implements AccountQuizService {
     }
 
     @Override
-    public void deleteAccount(Long id) {
+    public void deleteAccount(String id) {
         accountRepository.deleteById(id);
     }
 
     @Override
-    public Account patchAccount(Long id, Map<String, Object> updates) {
+    public Account patchAccount(String id, Map<String, Object> updates) {
         Optional<Account> existingAccountOptional = accountRepository.findById(id);
         if (existingAccountOptional.isPresent()) {
             Account existingAccount = existingAccountOptional.get();
@@ -61,7 +61,7 @@ public class AccountQuizServiceImpl implements AccountQuizService {
                         existingAccount.setType((String) value);
                         break;
                     case "customerId":
-                        existingAccount.setCustomerId((Long) value);
+                        existingAccount.setCustomerId((String) value);
                         break;
                     case "amount":
                         existingAccount.setAmount((Long) value);

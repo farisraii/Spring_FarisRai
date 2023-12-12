@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -32,7 +31,7 @@ public class CustomerQuizServiceTest {
     @BeforeEach
     public void setup() {
         testCustomer = new Customer();
-        testCustomer.setId(1L);
+        testCustomer.setId("1L");
         testCustomer.setName("John Doe");
         testCustomer.setAge(30);
     }
@@ -61,9 +60,9 @@ public class CustomerQuizServiceTest {
 
     @Test
     public void testGetCustomerById() {
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findById("1L")).thenReturn(Optional.of(testCustomer));
 
-        Optional<Customer> fetchedCustomer = customerService.getCustomerById(1L);
+        Optional<Customer> fetchedCustomer = customerService.getCustomerById("1L");
 
         assertThat(fetchedCustomer).isPresent();
         assertThat(fetchedCustomer.get()).isEqualTo(testCustomer);
@@ -80,21 +79,21 @@ public class CustomerQuizServiceTest {
 
     @Test
     public void testUpdateCustomer() {
-        when(customerRepository.existsById(1L)).thenReturn(true);
+        when(customerRepository.existsById("1L")).thenReturn(true);
         when(customerRepository.save(any(Customer.class))).thenReturn(testCustomer);
 
-        Customer updatedCustomer = customerService.updateCustomer(1L, testCustomer);
+        Customer updatedCustomer = customerService.updateCustomer("1L", testCustomer);
 
         assertThat(updatedCustomer).isEqualTo(testCustomer);
     }
 
     @Test
     public void testDeleteCustomer() {
-        doNothing().when(customerRepository).deleteById(1L);
+        doNothing().when(customerRepository).deleteById("1L");
 
-        customerService.deleteCustomer(1L);
+        customerService.deleteCustomer("1L");
 
-        verify(customerRepository, times(1)).deleteById(1L);
+        verify(customerRepository, times(1)).deleteById("1L");
     }
 
     @Test
@@ -103,10 +102,10 @@ public class CustomerQuizServiceTest {
         updates.put("name", "Jane Doe");
         updates.put("age", 35);
 
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findById("1L")).thenReturn(Optional.of(testCustomer));
         when(customerRepository.save(any(Customer.class))).thenReturn(testCustomer);
 
-        Customer patchedCustomer = customerService.patchCustomer(1L, updates);
+        Customer patchedCustomer = customerService.patchCustomer("1L", updates);
 
         assertThat(patchedCustomer).isNotNull();
         assertThat(patchedCustomer.getName()).isEqualTo("Jane Doe");
@@ -118,10 +117,10 @@ public class CustomerQuizServiceTest {
         Map<String, Object> updates = new HashMap<>();
         updates.put("address", "123 Main St");
 
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findById("1L")).thenReturn(Optional.of(testCustomer));
         when(customerRepository.save(any(Customer.class))).thenReturn(testCustomer);
 
-        Customer patchedCustomer = customerService.patchCustomer(1L, updates);
+        Customer patchedCustomer = customerService.patchCustomer("1L", updates);
 
         assertThat(patchedCustomer).isNotNull();
         assertThat(patchedCustomer.getName()).isEqualTo("John Doe");
@@ -133,26 +132,26 @@ public class CustomerQuizServiceTest {
         Map<String, Object> updates = new HashMap<>();
         updates.put("age", "thirty");
 
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findById("1L")).thenReturn(Optional.of(testCustomer));
 
-        assertThrows(IllegalArgumentException.class, () -> customerService.patchCustomer(1L, updates));
+        assertThrows(IllegalArgumentException.class, () -> customerService.patchCustomer("1L", updates));
     }
 
     @Test
     public void testPatchCustomerWithName() {
 
         Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        existingCustomer.setId("1L");
         existingCustomer.setName("Alice");
         existingCustomer.setAge(30);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("name", "Bob");
 
-        Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
+        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(existingCustomer));
         Mockito.when(customerRepository.save(any(Customer.class))).thenReturn(existingCustomer);
 
-        Customer patchedCustomer = customerService.patchCustomer(1L, updates);
+        Customer patchedCustomer = customerService.patchCustomer("1L", updates);
 
         // Assertions
         assertThat(patchedCustomer).isNotNull();
@@ -165,17 +164,17 @@ public class CustomerQuizServiceTest {
     public void testPatchCustomerWithAge() {
 
         Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        existingCustomer.setId("1L");
         existingCustomer.setName("Alice");
         existingCustomer.setAge(30);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("age", 35);
 
-        Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
+        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(existingCustomer));
         Mockito.when(customerRepository.save(any(Customer.class))).thenReturn(existingCustomer);
 
-        Customer patchedCustomer = customerService.patchCustomer(1L, updates);
+        Customer patchedCustomer = customerService.patchCustomer("1L", updates);
 
         assertThat(patchedCustomer).isNotNull();
         assertThat(patchedCustomer.getId()).isEqualTo(existingCustomer.getId());
@@ -186,16 +185,16 @@ public class CustomerQuizServiceTest {
     @Test
     public void testPatchCustomerWithInvalidDataType() {
         Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        existingCustomer.setId("1L");
         existingCustomer.setName("Alice");
         existingCustomer.setAge(30);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("age", "35"); 
 
-        Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
+        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(existingCustomer));
 
-        assertThatThrownBy(() -> customerService.patchCustomer(1L, updates))
+        assertThatThrownBy(() -> customerService.patchCustomer("1L", updates))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Invalid data type for 'age' field");
     }
@@ -206,9 +205,9 @@ public class CustomerQuizServiceTest {
         Map<String, Object> updates = new HashMap<>();
         updates.put("name", "Alice");
 
-        Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
+        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.empty());
 
-        Customer patchedCustomer = customerService.patchCustomer(1L, updates);
+        Customer patchedCustomer = customerService.patchCustomer("1L", updates);
 
         assertThat(patchedCustomer).isNull();
     }
@@ -216,12 +215,12 @@ public class CustomerQuizServiceTest {
     public void testUpdateCustomerWhenCustomerNotExists() {
 
         Customer nonExistingCustomer = new Customer();
-        nonExistingCustomer.setId(1L);
+        nonExistingCustomer.setId("1L");
         nonExistingCustomer.setName("John Doe");
 
-        Mockito.when(customerRepository.existsById(anyLong())).thenReturn(false);
+        Mockito.when(customerRepository.existsById(anyString())).thenReturn(false);
 
-        Customer updatedCustomer = customerService.updateCustomer(1L, nonExistingCustomer);
+        Customer updatedCustomer = customerService.updateCustomer("1L", nonExistingCustomer);
 
         assertThat(updatedCustomer).isNull();
     }
@@ -232,11 +231,11 @@ public class CustomerQuizServiceTest {
         updates.put("name", 123);
 
         Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        existingCustomer.setId("1L");
 
-        Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
+        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(existingCustomer));
 
-        assertThrows(IllegalArgumentException.class, () -> customerService.patchCustomer(1L, updates));
+        assertThrows(IllegalArgumentException.class, () -> customerService.patchCustomer("1L", updates));
     }
 
 }

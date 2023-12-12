@@ -40,7 +40,7 @@ public class CustomerQuizControllerTest {
     @BeforeEach
     public void setUp() {
         customer = new Customer();
-        customer.setId(1L);
+        customer.setId("1L");
         customer.setName("John Doe");
         customer.setAge(30);
         customer.setStatus(true);
@@ -62,7 +62,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testGetCustomerById() throws Exception {
-        when(customerService.getCustomerById(anyLong())).thenReturn(Optional.of(customer));
+        when(customerService.getCustomerById(anyString())).thenReturn(Optional.of(customer));
 
         mockMvc.perform(get("/api/customers/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -83,7 +83,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testUpdateCustomer() throws Exception {
-        when(customerService.updateCustomer(anyLong(), any(Customer.class))).thenReturn(customer);
+        when(customerService.updateCustomer(anyString(), any(Customer.class))).thenReturn(customer);
 
         mockMvc.perform(put("/api/customers/update/{id}", 1)
                 .content(objectMapper.writeValueAsString(customer))
@@ -94,7 +94,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testDeleteCustomer() throws Exception {
-        doNothing().when(customerService).deleteCustomer(anyLong());
+        doNothing().when(customerService).deleteCustomer(anyString());
 
         mockMvc.perform(delete("/api/customers/delete/{id}", 1))
                 .andExpect(status().isNoContent());
@@ -103,10 +103,10 @@ public class CustomerQuizControllerTest {
     @Test
     public void testPatchCustomer() throws Exception {
         Customer updatedCustomer = new Customer();
-        updatedCustomer.setId(1L);
+        updatedCustomer.setId("1L");
         updatedCustomer.setName("John Updated");
 
-        when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(updatedCustomer);
+        when(customerService.patchCustomer(anyString(), anyMap())).thenReturn(updatedCustomer);
 
         Map<String, Object> updates = Map.of("name", "John Updated");
 
@@ -119,7 +119,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testPatchCustomerNotFound() throws Exception {
-        when(customerService.patchCustomer(anyLong(), anyMap())).thenReturn(null);
+        when(customerService.patchCustomer(anyString(), anyMap())).thenReturn(null);
 
         Map<String, Object> updates = Map.of("name", "John Updated");
 
@@ -131,7 +131,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testUpdateCustomerNotFound() throws Exception {
-        when(customerService.updateCustomer(anyLong(), any(Customer.class))).thenReturn(null);
+        when(customerService.updateCustomer(anyString(), any(Customer.class))).thenReturn(null);
 
         mockMvc.perform(put("/api/customers/update/{id}", 1)
                 .content(objectMapper.writeValueAsString(customer))
@@ -141,7 +141,7 @@ public class CustomerQuizControllerTest {
 
     @Test
     public void testGetCustomerByIdNotFound() throws Exception {
-        when(customerService.getCustomerById(anyLong())).thenReturn(Optional.empty());
+        when(customerService.getCustomerById(anyString())).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/customers/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON))

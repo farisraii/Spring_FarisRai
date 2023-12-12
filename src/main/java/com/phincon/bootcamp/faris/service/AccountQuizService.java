@@ -8,9 +8,9 @@ import com.phincon.bootcamp.faris.model.Account;
 
 public interface AccountQuizService {
     List<Account> getAllAccounts();
-    Optional<Account> getAccountById(Long id);
+    Optional<Account> getAccountById(String id);
     Account createAccount(Account account);
-    Account updateAccount(Long id, Account account);
-    void deleteAccount(Long id);
-    Account patchAccount(Long id, Map<String, Object> updates);
+    Account updateAccount(String id, Account account);
+    void deleteAccount(String id);
+    Account patchAccount(String id, Map<String, Object> updates);
 }

@@ -10,36 +10,64 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "account")
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private String type;
     private String customerId;
+    private String name;
+    private String type;
+    private String status;
     private Long amount;
-    private Boolean status;
     private Timestamp createdDate;
     private Timestamp updatedDate;
-
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
-    public String getCustomerId() { return customerId; }
-    public void setCustomerId(String customerId) { this.customerId = customerId; }
-
-    public Long getAmount() { return amount; }
-    public void setAmount(Long amount) { this.amount = amount; }
-
-    public Boolean getStatus() { return status; }
-    public void setStatus(Boolean status) { this.status = status; }
-
-    public Timestamp getCreatedDate() { return createdDate; }
-    public void setCreatedDate(Timestamp createdDate) { this.createdDate = createdDate; }
-
-    public Timestamp getUpdatedDate() { return updatedDate; }
-    public void setUpdatedDate(Timestamp updatedDate) { this.updatedDate = updatedDate; }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getCustomerId() {
+        return customerId;
+    }
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public Long getAmount() {
+        return amount;
+    }
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+    public Timestamp getUpdatedDate() {
+        return updatedDate;
+    }
+    public void setUpdatedDate(Timestamp updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }
